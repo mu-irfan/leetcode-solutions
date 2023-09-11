@@ -35,7 +35,7 @@ export const SignupForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="gap-x-3 gap-y-4 grid grid-cols-1 md:grid-cols-2"
+        className="gap-x-3 gap-y-4 md:grid space-y-1 md:space-y-0 md:grid-cols-2"
       >
         <FormField
           control={form.control}
