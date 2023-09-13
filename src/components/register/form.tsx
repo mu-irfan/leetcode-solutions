@@ -12,11 +12,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import loginSchema from "@/schemas/auth";
+import { registerSchema } from "@/schemas/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "@/config/firebase";
+import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 
 export const SignupForm = () => {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const router = useRouter();
+
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -27,8 +33,31 @@ export const SignupForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
+  function onSubmit(values: z.infer<typeof registerSchema>) {
+    createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredentials) => {
+        const userUID = userCredentials.user.uid;
+        const userData = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+        };
+
+        const userDocRef = doc(db, "users", userUID);
+        setDoc(userDocRef, userData)
+          .then(() => {
+            router.push("/");
+          })
+          .catch((error) => {
+            // Handle Firestore data save error
+            console.error("Error saving user data: ", error);
+          });
+      })
+      .catch((error) => {
+        // Handle Firebase authentication error
+        console.error("Error creating user: ", error);
+      });
   }
 
   return (

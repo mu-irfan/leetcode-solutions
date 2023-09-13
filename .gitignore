@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# service-account
+service-account.json
+
 # testing
 /coverage
 

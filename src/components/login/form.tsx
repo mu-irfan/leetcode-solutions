@@ -12,22 +12,29 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import loginSchema from "@/schemas/auth";
-
+import { loginSchema } from "@/schemas/auth";
+import { signIn } from "next-auth/react";
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password:"",
+      password: "",
     },
   });
 
   function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    try {
+      signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: true,
+        callbackUrl: "/dashboard",
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -71,7 +78,9 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full !mt-4">Login</Button>
+        <Button type="submit" className="w-full !mt-4">
+          Login
+        </Button>
       </form>
     </Form>
   );

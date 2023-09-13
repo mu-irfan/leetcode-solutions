@@ -8,24 +8,23 @@ import {
 } from "@/components/ui/card";
 import { LoginForm } from "@/components/login/form";
 import Link from "next/link";
-import Image from "next/image";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export const metadata:Metadata = {
   title: "Leetcode solution | Login",
   description: "Login to your account to manage leetcode solutions",
 }
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  if (session) {
+    redirect("/dashboard")
+  }
   return (
     <section className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 px-3">
-      {/* <Image
-        src="/images/code.png"
-        alt="header-logo"
-        width={60}
-        height={60}
-        className="mb-4"
-      /> */}
       <div className="w-full max-w-sm">
         <Card className="shadow-sm border border-gray-300 bg-white rounded-xl py-2">
           <CardHeader className="gap-y-0.5">

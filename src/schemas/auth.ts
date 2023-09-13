@@ -1,6 +1,28 @@
 import * as z from "zod";
 
 const loginSchema = z.object({
+  email: z
+    .string()
+    .nonempty({
+      message: "Email is required.",
+    })
+    .email({
+      message: "Invalid email.",
+    }),
+  password: z
+    .string()
+    .nonempty({
+      message: "Password is required.",
+    })
+    .min(6, {
+      message: "Password must be at least 6 characters.",
+    })
+    .max(12, {
+      message: "Password must be less than 12 characters.",
+    }),
+});
+
+const registerSchema = z.object({
   firstName: z.string().nonempty({
     message: "First name is required.",
   }),
@@ -50,4 +72,4 @@ const loginSchema = z.object({
     }),
 });
 
-export default loginSchema;
+export { loginSchema, registerSchema };
