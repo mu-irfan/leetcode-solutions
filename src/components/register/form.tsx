@@ -19,11 +19,13 @@ import { auth, db } from "@/config/firebase";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
 import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
+import { useToast } from "@/components/ui/use-toast";
 
 export const SignupForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -54,13 +56,15 @@ export const SignupForm = () => {
             router.push("/");
           })
           .catch((error) => {
-            // Handle Firestore data save error
             console.error("Error saving user data: ", error);
           });
       })
       .catch((error) => {
-        // Handle Firebase authentication error
-        console.error("Error creating user: ", error);
+        toast({
+          variant: "destructive",
+          title: `${error.code}`,
+          description: "There was a problem with your request.",
+        });
       });
   }
 
