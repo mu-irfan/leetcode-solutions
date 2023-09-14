@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,10 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "@/schemas/auth";
 import { signIn } from "next-auth/react";
+import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
 
 export const LoginForm = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -66,13 +69,28 @@ export const LoginForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your password"
-                  type="password"
-                  id="password"
-                  className="p-5"
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    placeholder="Enter your password"
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    className="p-5"
+                    {...field}
+                  />
+                  {!showPassword ? (
+                    <HiOutlineEye
+                      size={17}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  ) : (
+                    <HiOutlineEyeSlash
+                      size={17}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -7,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import Image from "next/image";
 import { SignupForm } from "@/components/register/form";
 import { Metadata } from "next";
 
@@ -19,13 +18,6 @@ export const metadata:Metadata = {
 export default function Signup() {
   return (
     <section className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 px-3">
-      {/* <Image
-          src="/images/code.png"
-          alt="header-logo"
-          width={60}
-          height={60}
-          className="mb-4"
-        /> */}
       <div className="w-full max-w-lg">
         <Card className="shadow-sm border border-gray-300 bg-white rounded-xl py-2">
           <CardHeader className="gap-y-0.5">
