@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <>
-      <main className="pt-16">{children}</main>
+      <main className="pt-0">{children}</main>
     </>
   );
 }
