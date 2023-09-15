@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { QUESTIONS } from "@/config/constant";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import { MdContentCopy } from "react-icons/md";
 import { useToast } from "@/components/ui/use-toast";
+import { BsClipboard2Check } from "react-icons/bs";
 
 interface IProps {
   params: {
@@ -12,7 +13,8 @@ interface IProps {
   };
 }
 
-const CardID = ({ params }: IProps) => {
+export default function CardID({ params }: IProps) {
+  const [isCopied, setIsCopied] = useState(false);
   const data = QUESTIONS.find((question) => question.id === Number(params.id));
   const { toast } = useToast();
   if (!data) {
@@ -20,6 +22,7 @@ const CardID = ({ params }: IProps) => {
   }
 
   const copyCode = () => {
+    setIsCopied(true);
     navigator.clipboard
       .writeText(data?.code)
       .then(() =>
@@ -41,7 +44,7 @@ const CardID = ({ params }: IProps) => {
       <div className="flex items-baseline justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
-          LeetJS Solutions!
+            LeetJS Solutions!
           </h2>
           <p className="text-muted-foreground">Manage Solutions</p>
           <hr />
@@ -67,10 +70,14 @@ const CardID = ({ params }: IProps) => {
             Solution:
           </h2>
           <div className="relative">
-            <MdContentCopy
-              className="cursor-pointer text-white absolute top-4 right-4"
-              onClick={copyCode}
-            />
+            {!isCopied ? (
+              <MdContentCopy
+                className="cursor-pointer text-white absolute top-4 right-4 hover:text-blue-300"
+                onClick={copyCode}
+              />
+            ) : (
+              <BsClipboard2Check className="cursor-pointer text-white absolute top-4 right-4 hover:text-blue-300" />
+            )}
             <SyntaxHighlighter
               language="javascript"
               style={dracula}
@@ -85,6 +92,4 @@ const CardID = ({ params }: IProps) => {
       </div>
     </div>
   );
-};
-
-export default CardID;
+}

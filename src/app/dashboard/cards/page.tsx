@@ -20,7 +20,7 @@ interface Props {
   };
 }
 
-const CardQuestion = ({ question }: Props) => {
+export default function CardQuestion({ question }: Props) {
   function truncateString(str: string, maxLength: number) {
     if (str.length <= maxLength) {
       return str;
@@ -67,6 +67,4 @@ const CardQuestion = ({ question }: Props) => {
       </CardFooter>
     </Card>
   );
-};
-
-export default CardQuestion;
+}
