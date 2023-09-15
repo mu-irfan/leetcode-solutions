@@ -28,8 +28,8 @@ export default function SolutionPage() {
         </div>
       </div>
       <div className="flex flex-wrap gap-3 justify-center">
-        {QUESTIONS.map((question) => (
-          <CardQuestion question={question} key={question.id} />
+        {QUESTIONS.map((ques) => (
+          <CardQuestion question={ques} key={ques.id} />
         ))}
       </div>
     </div>

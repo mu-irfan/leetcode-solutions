@@ -48,7 +48,7 @@ export default function CardQuestion({ question }: Props) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {question.tags.map((tag: string) => (
+        {question?.tags?.map((tag: string) => (
           <span
             key={tag}
             className="px-2.5 py-1 mr-2 text-sm font-medium text-gray-500 bg-gray-100 rounded-full"
