@@ -11,7 +11,7 @@ import { LiaShareSolid } from "react-icons/lia";
 import { HiOutlineEye } from "react-icons/hi2";
 import Link from "next/link";
 
-interface Props {
+interface IProps {
   question: {
     id: number;
     title: string;
@@ -20,7 +20,7 @@ interface Props {
   };
 }
 
-export default function CardQuestion({ question }: Props) {
+export default function CardQuestion({ question }: IProps) {
   function truncateString(str: string, maxLength: number) {
     if (str.length <= maxLength) {
       return str;

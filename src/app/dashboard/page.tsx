@@ -3,7 +3,7 @@ import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { QUESTIONS } from "@/config/constant";
-import CardQuestion from "@/app/dashboard/cards/page"
+import CardQuestion from "@/components/cards/cards";
 export default function SolutionPage() {
   const session = useSession({
     required: true,
